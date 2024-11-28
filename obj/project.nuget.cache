@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "r4+ncbxhEcE7uHMUzzCi+l6U5b7MqrDwoRNZZC8fQhM1B6PkVp2zmoT+S2eiCS+Wc4rHMmnUX1DMvcl7sYWZew==",
+  "dgSpecHash": "vTOnBvRYQoWqpBxT5ZtiAJOG9iFoyhMyU5qwVijk1QHtqGpD+XDFoZEi8Fei+eDIT1ErLdGV5g7QkW4yt3RGWA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\admin\\Desktop\\BilbliotecMVC\\Bibliotec\\Bibliotec.csproj",
+  "projectFilePath": "C:\\Users\\admin\\Desktop\\Bibliotec atualizada\\Bibliotec_mvc\\Bibliotec.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\admin\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\admin\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
