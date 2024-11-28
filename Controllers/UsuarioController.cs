@@ -28,7 +28,7 @@ namespace Bibliotec_mvc.Controllers
         {
             //Pegar as informacoes da session que sao necessárias para que aparece os detalhes do meu usuário
            int id = int.Parse(HttpContext.Session.GetString("UsuarioID")!);
-           string admin = HttpContext.Session.GetString("Admin")!;
+           ViewBag.Admin = HttpContext.Session.GetString("Admin")!;
 
             // Busquei o usuário que está logado (Beatriz)
             Usuario usuarioEncontrado = context.Usuario.FirstOrDefault(usuario => usuario.UsuarioID == id)!;
