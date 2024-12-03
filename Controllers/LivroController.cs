@@ -54,20 +54,31 @@ namespace Bibliotec_mvc.Controllers
         [Route("Cadastrar")]
         public IActionResult Cadastrar(IFormCollection form){
 
+            //PRIMEIRA PARTE: Cadastrar um livro na tabela Livro
             Livro novoLivro = new Livro();
 
             //O que meu usuário escrever no formulário será atribuido ao novoLivro
-
             novoLivro.Nome = form["Nome"].ToString();
             novoLivro.Descricao = form["Descricao"].ToString();
             novoLivro.Editora = form["Editora"].ToString();
             novoLivro.Escritor = form["Escritor"].ToString();
             novoLivro.Idioma = form["Idioma"].ToString();
-
             //img
             context.Livro.Add(novoLivro);
-
             context.SaveChanges();
+
+            // SEGUNDA PARTE: É adicionar dentro de LivroCategoria a categoria que pertence ao novoLivro
+            //Lista a tabela LivroCategoria:
+            List<LivroCategoria> livroCategorias = new List<LivroCategoria>(); 
+
+            //Array que possui as categorias selecionadas pelo usuário
+            string[] categoriasSelecionadas = form["Categoria"].ToString().Split(',');
+            //Ação, terror, suspense     
+
+
+
+
+            
 
         }
 
