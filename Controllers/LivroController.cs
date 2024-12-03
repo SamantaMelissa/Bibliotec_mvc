@@ -30,11 +30,11 @@ namespace Bibliotec_mvc.Controllers
             List<Livro> listaLivros = context.Livro.ToList();
 
             //Verificar se o livro tem reserva ou não
+            //ToDictionay(chave, valor)
             var livrosReservados = context.LivroReserva.ToDictionary(livro => livro.LivroID, livror => livror.DtReserva);
 
             ViewBag.Livros = listaLivros;
             ViewBag.LivrosComReserva = livrosReservados;
-
 
             return View();
         }
