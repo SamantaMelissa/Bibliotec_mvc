@@ -41,7 +41,8 @@ namespace Bibliotec_mvc.Controllers
 
         [Route("Cadastro")]
         //Método que retorna a tela de cadastro:
-        public IActionResult Cadastro(){
+        public IActionResult Cadastro()
+        {
 
             ViewBag.Admin = HttpContext.Session.GetString("Admin")!;
 
@@ -52,7 +53,8 @@ namespace Bibliotec_mvc.Controllers
 
         // Método para cadastrar um livro:
         [Route("Cadastrar")]
-        public IActionResult Cadastrar(IFormCollection form){
+        public IActionResult Cadastrar(IFormCollection form)
+        {
 
             //PRIMEIRA PARTE: Cadastrar um livro na tabela Livro
             Livro novoLivro = new Livro();
@@ -63,20 +65,54 @@ namespace Bibliotec_mvc.Controllers
             novoLivro.Editora = form["Editora"].ToString();
             novoLivro.Escritor = form["Escritor"].ToString();
             novoLivro.Idioma = form["Idioma"].ToString();
-            //img
+
+            //Trabalhar com imagens:
+
+            if (form.Files.Count > 0)
+            {
+                //Primeiro passo:
+                // Armazenaremos o arquivo/foto enviado pelo usuário
+                var arquivo = form.Files[0];
+
+                //Segundo passo:
+                //Criar variavel do caminho da minha pasta para colocar as fotos dos livros
+                var pasta = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/Livros");
+                //Validaremos se a pasta que será armazenada as imagens, existe. Caso não exista, criaremos uma nova pasta.
+                if (!Directory.Exists(pasta))
+                {
+                    //Criar a pasta:
+                    Directory.CreateDirectory(pasta);
+                }
+                //Terceiro passo:
+                //Criar a variavel para armazenar o caminho em que meu arquivo estara, além do nome dele
+                var caminho = Path.Combine(pasta, arquivo.FileName);
+
+                using (var stream = new FileStream(caminho, FileMode.Create))
+                {
+                    //Copiou o arquivo para o meu diretório
+                    arquivo.CopyTo(stream);
+                }
+
+                novoLivro.Imagem = arquivo.FileName;
+            }else{
+                novoLivro.Imagem = "padrao.png";
+            }
+
+
             context.Livro.Add(novoLivro);
             context.SaveChanges();
 
             // SEGUNDA PARTE: É adicionar dentro de LivroCategoria a categoria que pertence ao novoLivro
             //Lista a tabela LivroCategoria:
-            List<LivroCategoria> listaLivroCategorias = new List<LivroCategoria>(); 
+            List<LivroCategoria> listaLivroCategorias = new List<LivroCategoria>();
 
             //Array que possui as categorias selecionadas pelo usuário
             string[] categoriasSelecionadas = form["Categoria"].ToString().Split(',');
             //Ação, terror, suspense
             //3, 5, 7
 
-            foreach(string categoria in categoriasSelecionadas){
+            foreach (string categoria in categoriasSelecionadas)
+            {
                 //string categoria possui a informação do id da categoria ATUAL selecionada.
                 LivroCategoria livroCategoria = new LivroCategoria();
 
@@ -91,7 +127,7 @@ namespace Bibliotec_mvc.Controllers
 
             context.SaveChanges();
 
-            return LocalRedirect("/Cadastro");         
+            return LocalRedirect("/Cadastro");
 
         }
 
