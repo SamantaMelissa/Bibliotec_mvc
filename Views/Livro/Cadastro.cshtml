@@ -42,8 +42,8 @@
                     <ul>
                         @foreach(Categoria categoria in ViewBag.Categorias){
                             <li>
-                        <input name="Categoria" type="checkbox">
-                        <label class="form-label-categoria" for="Categoria">@ViewBag.Nome</label>
+                        <input name="Categoria" type="checkbox" value="@categoria.CategoriaID">
+                        <label class="form-label-categoria" for="Categoria">@categoria.Nome</label>
                             </li>
                         }
                        
