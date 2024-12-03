@@ -69,16 +69,29 @@ namespace Bibliotec_mvc.Controllers
 
             // SEGUNDA PARTE: É adicionar dentro de LivroCategoria a categoria que pertence ao novoLivro
             //Lista a tabela LivroCategoria:
-            List<LivroCategoria> livroCategorias = new List<LivroCategoria>(); 
+            List<LivroCategoria> listaLivroCategorias = new List<LivroCategoria>(); 
 
             //Array que possui as categorias selecionadas pelo usuário
             string[] categoriasSelecionadas = form["Categoria"].ToString().Split(',');
-            //Ação, terror, suspense     
+            //Ação, terror, suspense
+            //3, 5, 7
 
+            foreach(string categoria in categoriasSelecionadas){
+                //string categoria possui a informação do id da categoria ATUAL selecionada.
+                LivroCategoria livroCategoria = new LivroCategoria();
 
+                livroCategoria.CategoriaID = int.Parse(categoria);
+                livroCategoria.LivroID = novoLivro.LivroID;
+                //Adicionamos o obj livroCategoria dentro da lista listaLivroCategorias
+                listaLivroCategorias.Add(livroCategoria);
+            }
 
+            //Peguei a coleção da listaLivroCategorias e coloquei na tabela LivroCategoria
+            context.LivroCategoria.AddRange(listaLivroCategorias);
 
-            
+            context.SaveChanges();
+
+            return LocalRedirect("/Cadastro");         
 
         }
 
