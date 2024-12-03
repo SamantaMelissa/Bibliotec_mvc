@@ -43,6 +43,9 @@ namespace Bibliotec_mvc.Controllers
         //Método que retorna a tela de cadastro:
         public IActionResult Cadastro(){
 
+            ViewBag.Admin = HttpContext.Session.GetString("Admin")!;
+
+            ViewBag.Categorias = context.Categoria.ToList();
             //Retorna a View de cadastro:
             return View();
         }
