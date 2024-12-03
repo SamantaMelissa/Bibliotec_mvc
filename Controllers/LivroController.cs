@@ -39,6 +39,14 @@ namespace Bibliotec_mvc.Controllers
             return View();
         }
 
+        [Route("Cadastro")]
+        //Método que retorna a tela de cadastro:
+        public IActionResult Cadastro(){
+
+            //Retorna a View de cadastro:
+            return View();
+        }
+
         // [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         // public IActionResult Error()
         // {
