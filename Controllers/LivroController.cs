@@ -159,6 +159,44 @@ namespace Bibliotec_mvc.Controllers
             return View();
         }
 
+        //Método que atualiza as informações do Livro:
+        [Route("Atualizar/{id}")]
+        public IActionResult Atualizar(IFormCollection form, int id, IFormFile imagem){
+            //Buscar um livro especifico pelo ID
+            Livro livroAtualizado = context.Livro.FirstOrDefault(livro => livro.LivroID == id)!;
+
+            livroAtualizado.Nome = form["Nome"]; 
+            livroAtualizado.Escritor = form["Escritor"];
+            livroAtualizado.Editora = form["Editora"];
+            livroAtualizado.Idioma = form["Idioma"];
+            livroAtualizado.Descricao = form["Descricao"];
+
+            //Upload de imagem
+            if(imagem.Length > 0){
+                //Definir o caminho da minha imagem do livro ATUAL, que eu quero alterar:
+                var caminhoImagem = Path.Combine("wwwroot/images/Livros", imagem.FileName);
+
+                //Verificar se o usuario colocou uma imagem para atualizar o livro
+                if(!string.IsNullOrEmpty(livroAtualizado.Imagem)){
+                    //Caso exista, ela irá ser apagada
+                    var caminhoImagemAntiga = Path.Combine("wwwroot/images/Livros", livroAtualizado.Imagem);
+                    //Ver se existe uma imagem no caminho antigo
+                    if(System.IO.File.Exists(caminhoImagemAntiga)){
+                        System.IO.File.Delete(caminhoImagemAntiga);
+                    }
+                }
+
+                //Salvar a imagem nova
+                using(var stream = new FileStream(caminhoImagem, FileMode.Create)){
+                    imagem.CopyTo(stream);
+                }
+
+                //Subir essa mudança para o meu banco de dados
+                livroAtualizado.Imagem = imagem.FileName;
+            }
+
+        }
+
         // [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         // public IActionResult Error()
         // {
