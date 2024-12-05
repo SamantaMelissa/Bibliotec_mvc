@@ -127,13 +127,37 @@ namespace Bibliotec_mvc.Controllers
 
             context.SaveChanges();
 
-            return LocalRedirect("/Cadastro");
+            return LocalRedirect("/Livro/Cadastro");
 
         }
 
 
+        [Route("Editar/{id}")]
+        public IActionResult Editar(int id){
+
+            ViewBag.Admin = HttpContext.Session.GetString("Admin")!;
+
+            ViewBag.CategoriasDoSistema = context.Categoria.ToList();
+
+            // LivroID == 3
+
+            //Buscar quem é o tal do id numero 3:
+            Livro livroEncontrado = context.Livro.FirstOrDefault(livro => livro.LivroID == id)!;
+
+            //Buscar as categorias que o livroEncontrado possui
+            var categoriasDoLivroEncontrado = context.LivroCategoria
+            .Where(identificadorLivro => identificadorLivro.LivroID == id)
+            .Select(livro => livro.Categoria)
+            .ToList();
+
+            //Quero pegar as informaçoes do meu livro selecionado e mandar para a minha View
+            ViewBag.Livro = livroEncontrado;
+            ViewBag.Categoria = categoriasDoLivroEncontrado;
 
 
+
+            return View();
+        }
 
         // [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         // public IActionResult Error()
